@@ -5,9 +5,6 @@
   <body>
     <style>
       #todoForm{
-        background-color: #fafafa;
-        padding: 10px;
-        max-width: 400px;
         display: flex;
       }
       #todoForm form {
@@ -16,24 +13,94 @@
         flex-direction: column;
       }
       #todoForm input {
-        padding: 5px;
-        border-radius: 5px;
+        font-size: 2em;
+        padding: 10px;
+        border: 0;
+        border-radius: 4px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
       }
       #todoForm .buttonWrapper {
         margin-top: 10px;
         display: flex;
         justify-content: end;
       }
+      #wrapper {
+        width: 500px;
+        margin: auto;
+      }
+      #wrapper h1 {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .shadow-card {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        background-color: #ffffff;
+        padding: 10px;
+      }
+      #todoList {
+        margin-top: 1em;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .todoItem{
+        display: flex;
+        justify-content: space-between;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        align-items: center;
+      }
+
+      button {
+        background: #506e85;
+        padding: 12px;
+        border-radius: 10px;
+        border: 0;
+        color: white;
+        font-weight: bold;
+      }
     </style>
-    <div id="todoForm">
-      <form>
-        <input type="text" name="todo" />
-        <div class="buttonWrapper">
-          <button type="submit" >
-            Add New TODO
-          </button>
+    <div id="wrapper">
+      <h1>ToDo List</h1>
+
+      <div id="todoForm" class="shadow-card">
+        <form method="POST" action="/addTodo">
+          <input type="text" name="todo" />
+          <div class="buttonWrapper">
+            <button type="submit" >
+              Add New TODO
+            </button>
+          </div>
+        </form>
+      </div>
+      <div id="todoList" class="shadow-card">
+
+        <div class="todoItem">
+          <div class="todoContent">Buy milk</div>
+          <div class="todoAction">
+            <form method="POST" action="/markAsDone" style="display: inline;">
+              <input type="hidden" id=""/>
+              <button type="submit">Mark as Done</button>
+            </form>
+          </div>
         </div>
-      </form>
+
+        <div class="todoItem">
+          <div class="todoContent">Do homework</div>
+          <div class="todoAction">
+            <button>Mark as Done</button>
+          </div>
+        </div>
+
+        <div class="todoItem">
+          <div class="todoContent">Pay bills</div>
+          <div class="todoAction">
+            <button>Mark as Done</button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </body>
 </html>
