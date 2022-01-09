@@ -1,10 +1,23 @@
 const express = require('express')
+const fs = require('fs');
 
 const app = express()
 app.use(express.urlencoded({ extended: true }));
 const port = 3000
 
 let todos = [];
+
+function writeData(data, filename){
+  fs.writeFileSync(filename, data.join('\n'))
+}
+
+// read contents of filename and return array of string
+function readData(filename){
+  let content = fs.readFileSync(filename)
+  let parsedData = String(content).trim().split('\n')
+  return parsedData
+}
+
 
 function generateTodoEntry(){
   let html = ''
@@ -116,12 +129,14 @@ function indexPage(req, res) {
 
 function addTodo(req, res){
   todos.push(req.body.todo)
+  writeData(todos, 'todos.txt')
   res.redirect('/')
 }
 
 function markAsDone(req, res){
   let index = parseInt(req.body.index)
   todos.splice(index, 1)
+  writeData(todos, 'todos.txt')
   res.redirect('/')
 }
 
@@ -129,6 +144,7 @@ app.get('/', indexPage)
 app.post('/tambahTodo', addTodo)
 app.post('/markAsDone', markAsDone)
 
+todos = readData('todos.txt')
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
