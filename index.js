@@ -175,7 +175,9 @@ function markAsDone(req, res){
 
 function undoDone(req, res){
   let index = parseInt(req.body.index)
-  // ????J
+  todos.push(completedTodos[index])
+  completedTodos.splice(index, 1)
+  writeData(todos, 'todos.txt')
   res.redirect('/')
 }
 
