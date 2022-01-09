@@ -6,6 +6,7 @@ app.use(express.urlencoded({ extended: true }));
 const port = 3000
 
 let todos = [];
+let completedTodos = [];
 
 function writeData(data, filename){
   fs.writeFileSync(filename, data.join('\n'))
@@ -42,10 +43,10 @@ function generateTodoEntry(){
 function generateCompletedTodoEntry(){
   let html = ''
 
-  for(let i=0; i < todos.length; i++){
+  for(let i=0; i < completedTodos.length; i++){
     html += `
       <div class="todoItem">
-        <div class="todoContent">${todos[i]}</div>
+        <div class="todoContent">${completedTodos[i]}</div>
         <div class="todoAction">
           <form method="POST" action="/markAsDone" style="display: inline;">
             <input type="hidden" name="index" value="${i}"/>
@@ -166,7 +167,8 @@ function addTodo(req, res){
 
 function markAsDone(req, res){
   let index = parseInt(req.body.index)
-  todos.splice(index, 1)
+  let completedTodo = todos.splice(index, 1)
+  completedTodos.push(completedTodo)
   writeData(todos, 'todos.txt')
   res.redirect('/')
 }
