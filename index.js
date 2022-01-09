@@ -48,7 +48,7 @@ function generateCompletedTodoEntry(){
       <div class="todoItem">
         <div class="todoContent">${completedTodos[i]}</div>
         <div class="todoAction">
-          <form method="POST" action="/markAsDone" style="display: inline;">
+          <form method="POST" action="/undoDone" style="display: inline;">
             <input type="hidden" name="index" value="${i}"/>
             <button type="submit">Undo</button>
           </form>
@@ -167,15 +167,22 @@ function addTodo(req, res){
 
 function markAsDone(req, res){
   let index = parseInt(req.body.index)
-  let completedTodo = todos.splice(index, 1)
-  completedTodos.push(completedTodo)
+  completedTodos.push(todos[index]) // push item to second array
+  todos.splice(index, 1) // delete item from todos array
   writeData(todos, 'todos.txt')
+  res.redirect('/')
+}
+
+function undoDone(req, res){
+  let index = parseInt(req.body.index)
+  // ????J
   res.redirect('/')
 }
 
 app.get('/', indexPage)
 app.post('/tambahTodo', addTodo)
 app.post('/markAsDone', markAsDone)
+app.post('/undoDone', undoDone)
 
 todos = readData('todos.txt')
 app.listen(port, () => {
