@@ -60,6 +60,14 @@
         color: white;
         font-weight: bold;
       }
+
+      #completedTodo {
+        margin-top: 12px;
+        color: #bbb;
+      }
+      #completedTodo button {
+        background: #7790a3;
+      }
     </style>
     <div id="wrapper">
       <h1>ToDo List</h1>
@@ -97,6 +105,28 @@
           <div class="todoContent">Pay bills</div>
           <div class="todoAction">
             <button>Mark as Done</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="completedTodo" class="shadow-card">
+        <h1>Completed tasks</h1>
+
+        <div class="todoItem">
+          <div class="todoContent">Buy milk</div>
+          <div class="todoAction">
+            <form method="POST" action="/markAsDone" style="display: inline;">
+              <input type="hidden" id=""/>
+              <button type="submit">Undo</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="todoItem">
+          <div class="todoContent">Do homework</div>
+          <div class="todoAction">
+            <button>Undo</button>
           </div>
         </div>
 

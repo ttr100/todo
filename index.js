@@ -39,6 +39,26 @@ function generateTodoEntry(){
   return html
 }
 
+function generateCompletedTodoEntry(){
+  let html = ''
+
+  for(let i=0; i < todos.length; i++){
+    html += `
+      <div class="todoItem">
+        <div class="todoContent">${todos[i]}</div>
+        <div class="todoAction">
+          <form method="POST" action="/markAsDone" style="display: inline;">
+            <input type="hidden" name="index" value="${i}"/>
+            <button type="submit">Undo</button>
+          </form>
+        </div>
+      </div>
+    `
+  }
+
+  return html
+}
+
 
 function indexPage(req, res) {
   res.send(`
@@ -104,6 +124,14 @@ function indexPage(req, res) {
         color: white;
         font-weight: bold;
       }
+
+      #completedTodo {
+        margin-top: 12px;
+        color: #bbb;
+      }
+      #completedTodo button {
+        background: #7790a3;
+      }
     </style>
     <div id="wrapper">
       <h1>ToDo List</h1>
@@ -120,6 +148,9 @@ function indexPage(req, res) {
       </div>
       <div id="todoList" class="shadow-card">
         ${ generateTodoEntry()}
+      </div>
+      <div id="completedTodo" class="shadow-card">
+        ${ generateCompletedTodoEntry()}
       </div>
     </div>
   </body>
